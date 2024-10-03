@@ -121,7 +121,7 @@ const SigninForm = () => {
             className="text-small-regular text-light-2 text-center 
           mt-2"
           >
-            Dont't have an account
+            Dont't have an account?
             <Link
               to="/sign-up"
               className="text-primary-600 ml-2 text-small-semibold"

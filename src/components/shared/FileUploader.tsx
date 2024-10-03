@@ -2,12 +2,17 @@ import React, { useCallback, useState } from "react";
 import { useDropzone, FileWithPath } from "react-dropzone";
 import { Button } from "../ui/button";
 
-const FileUploader = ({ fieldChange, mediaUrl }: any) => {
-  const [fileUrl, setFileUrl] = useState("");
-  const [file, setFile] = useState([]);
+type fileUploaderProps = {
+  fieldChange: (FILES: File[]) => void;
+  mediaUrl: string;
+};
+
+const FileUploader = ({ fieldChange, mediaUrl }: fileUploaderProps) => {
+  const [fileUrl, setFileUrl] = useState(mediaUrl);
+  const [file, setFile] = useState<File[]>([]);
 
   const onDrop = useCallback(
-    (acceptedFiles: FileWithPath) => {
+    (acceptedFiles: FileWithPath[]) => {
       setFile(acceptedFiles);
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
       fieldChange(acceptedFiles);
@@ -28,7 +33,14 @@ const FileUploader = ({ fieldChange, mediaUrl }: any) => {
     >
       <input {...getInputProps()} className="cursor-pointer" />
       {fileUrl ? (
-        <div>test1</div>
+        <>
+          <div className="flex flex-1 flex-col justify-center w-full p-5 lg:p-10">
+            <img src={fileUrl} alt="image" className="file_uploader-img" />
+            <p className="file_uploader-label">
+              Click or drag photo to replace
+            </p>
+          </div>
+        </>
       ) : (
         <div className="file_uploader-box">
           <img
